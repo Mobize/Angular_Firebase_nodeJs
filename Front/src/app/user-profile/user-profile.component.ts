@@ -21,37 +21,37 @@ export class UserProfileComponent implements OnInit {
   displayAdmin: string;
   isPasswordChanged: boolean;
   displayIsPasswordChanged: string;
-  loadingCircle = true;
-  displayName: string;
-  emailUser: string;
+  // loadingCircle = true;
+  emailUser = firebase.auth().currentUser.email;
+  displayName = firebase.auth().currentUser.displayName;
   tokenId: string;
 
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    this.data = this.dataService.getDataUser(this.auth.currentUser.uid);
-    this.data.subscribe((response) => {
-      this.loadingCircle = false;
-      this.isAdmin = response.isAdmin;
-      this.displayName = response.displayName;
-      this.emailUser = response.email;
-      this.isPasswordChanged = response.isPasswordChanged;
-      if (this.isAdmin) {
-        this.displayAdmin = 'Oui';
-      } else {
-        this.displayAdmin = 'Non';
-      }
-      if (response.isPasswordChanged) {
-        this.displayIsPasswordChanged = 'Oui';
-      } else {
-        this.displayIsPasswordChanged = 'Non';
-      }
-    });
+    // this.data = this.dataService.getDataUser(this.auth.currentUser.uid);
+    // this.data.subscribe((response) => {
+    //   this.loadingCircle = false;
+    //   this.isAdmin = response.isAdmin;
+    //   this.displayName = response.displayName;
+    //   this.emailUser = response.email;
+    //   this.isPasswordChanged = response.isPasswordChanged;
+    //   if (this.isAdmin) {
+    //     this.displayAdmin = 'Oui';
+    //   } else {
+    //     this.displayAdmin = 'Non';
+    //   }
+    //   if (response.isPasswordChanged) {
+    //     this.displayIsPasswordChanged = 'Oui';
+    //   } else {
+    //     this.displayIsPasswordChanged = 'Non';
+    //   }
+    // });
 
     this.auth.currentUser.getIdToken(/* forceRefresh */ true).then((idToken) => {
       // Send token to your backend via HTTPS
       this.tokenId = idToken;
-      console.log(this.tokenId);
+      // console.log(this.tokenId);
     }).catch((error) => {
       // Handle error
     });

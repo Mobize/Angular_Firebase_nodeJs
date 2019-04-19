@@ -1,7 +1,7 @@
+import { User } from './../models/user.model';
 import { UserAuth } from './../models/userAuth.model';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { auth } from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
@@ -16,56 +16,33 @@ import * as firebase from 'firebase/app';
 })
 export class AuthService {
 
-  user: Observable<UserAuth>;
+  userLocal: User;
+  googleUserProfile;
 
   constructor(private afAuth: AngularFireAuth,
               private afs: AngularFirestore,
               private router: Router) {
-
-    //// Get auth data, then get firestore user document || null
-    this.user = this.afAuth.authState.pipe(
-      switchMap(user => {
-        if (user) {
-          return this.afs.doc<UserAuth>(`Users/${user.uid}`).valueChanges();
-        } else {
-          return of(null);
-        }
-      })
-    );
   }
 
-  private updateUserData(user: firebase.User) {
-    // Sets user data to firestore on login
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`Users/${user.uid}`);
-    const newUserGoogleAuth: UserAuth = {
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      isAdmin: false,
-      isPasswordChanged: false
-    };
+  //  updateUserData(user) {
+  //   user = firebase.auth().currentUser;
+  //   user.updateProfile({
+  //     photoURL: this.googleUserProfile.picture
+  //   });
+  // }
 
-    const updatePhoto: UserAuth = {
-      photoURL: user.photoURL
-    };
-    if (!userRef) {
-      return userRef.set(newUserGoogleAuth, { merge: true });
-    } else if (userRef) {
-      return userRef.set(updatePhoto, { merge: true });
-    }
-  }
+  // private oAuthLogin(provider) {
+  //   return firebase.auth().signInWithPopup(provider)
+  //     .then((credential) => {
+  //       this.googleUserProfile = credential.additionalUserInfo.profile;
+  //       this.updateUserData(credential.user);
+  //     });
+  // }
 
-  private oAuthLogin(provider) {
-    return this.afAuth.auth.signInWithPopup(provider)
-      .then((credential) => {
-        this.updateUserData(credential.user);
-      });
-  }
-
-  googleLogin() {
-    const provider = new auth.GoogleAuthProvider();
-    return this.oAuthLogin(provider);
-  }
+  // googleLogin() {
+  //   const provider = new auth.GoogleAuthProvider();
+  //   return this.oAuthLogin(provider);
+  // }
 
   createNewUser(email: string, password: string) {
     return new Promise(
@@ -97,14 +74,9 @@ export class AuthService {
     );
   }
 
-  signOut() {
-    this.afAuth.auth.signOut().then(() => {
-        this.router.navigate(['/']);
-    });
-  }
-
   signOutUser() {
     firebase.auth().signOut();
+    localStorage.removeItem('isPasswordChanged');
   }
 
 }

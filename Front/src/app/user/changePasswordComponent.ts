@@ -7,6 +7,7 @@ import { CustomValidators } from 'src/app/custom-validators';
 import {MatDialog, MatDialogRef} from '@angular/material';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-user-list',
@@ -15,7 +16,6 @@ import { Observable } from 'rxjs';
 })
 export class ChangePasswordComponent implements OnInit {
 
-  users: User[];
   user = firebase.auth().currentUser;
   updatePasswordForm: FormGroup;
   errorMessage: string;
@@ -24,17 +24,17 @@ export class ChangePasswordComponent implements OnInit {
   isLoading = false;
   auth = firebase.auth();
 
+
   constructor(private router: Router,
               private formBuilder: FormBuilder,
               public dialog1: MatDialog,
-              public dialog2: MatDialog,
-              private db: AngularFirestore) {
+              public dialog2: MatDialog) {
                 this.openDialogInfo();
               }
 
-  updatePasswordFirestore() {
-    this.db.doc('Users/' + this.auth.currentUser.uid).update({isPasswordChanged : true});
-  }
+  // updatePasswordFirestore() {
+  //   this.db.doc('Users/' + this.auth.currentUser.uid).update({isPasswordChanged : true});
+  // }
 
   // Confirmation de changement de mot de passe
   openDialogConfirmation(): void {
@@ -52,23 +52,23 @@ export class ChangePasswordComponent implements OnInit {
 
   // Information de la necessité de changer le mot de passe
   openDialogInfo() {
-    const document: AngularFirestoreDocument<any> = this.db.doc('Users/' + this.auth.currentUser.uid);
-    const document$: Observable<any> = document.valueChanges();
-    document$.subscribe((data) => {
-      if (!data.isPasswordChanged) {
-        const showPopUp = localStorage.getItem('isPopUpShow');
-        if (showPopUp !== 'oui') {
-          // tslint:disable-next-line: no-use-before-declare
-          const dialogRefInfo = this.dialog2.open(DialogInfoComponent, {
-            width: '300px',
-            position: {top: '330px' }
-          });
-          dialogRefInfo.afterClosed().subscribe(result => {
-            localStorage.setItem('isPopUpShow', 'oui');
-          });
-        }
-      }
-    });
+    // const document: AngularFirestoreDocument<any> = this.db.doc('Users/' + this.auth.currentUser.uid);
+    // const document$: Observable<any> = document.valueChanges();
+    // document$.subscribe((data) => {
+    //   if (!data.isPasswordChanged) {
+    //     const showPopUp = localStorage.getItem('isPopUpShow');
+    //     if (showPopUp !== 'oui') {
+    //       // tslint:disable-next-line: no-use-before-declare
+    //       const dialogRefInfo = this.dialog2.open(DialogInfoComponent, {
+    //         width: '300px',
+    //         position: {top: '330px' }
+    //       });
+    //       dialogRefInfo.afterClosed().subscribe(result => {
+    //         localStorage.setItem('isPopUpShow', 'oui');
+    //       });
+    //     }
+    //   }
+    // });
   }
 
   initForm() {
@@ -107,7 +107,7 @@ export class ChangePasswordComponent implements OnInit {
         // confirmation du changement de mot de passe
         this.openDialogConfirmation();
         // Modification du champ de la bdd firestore
-        this.updatePasswordFirestore();
+        // this.updatePasswordFirestore();
         this.isLoading = false;
         },
         (error) => {
@@ -121,7 +121,12 @@ export class ChangePasswordComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
-    localStorage.getItem('isPopUpShow');
+    // localStorage.getItem('isPopUpShow');
+    const test = localStorage.getItem('isPasswordChanged');
+    // console.log(test);
+    // this.dataService.getDataUser(this.auth.currentUser.uid).subscribe((response) => {
+    //   this.dataUser = response;
+    // });
   }
 
 }

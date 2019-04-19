@@ -33,12 +33,13 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatCardModule} from '@angular/material/card';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatDividerModule} from '@angular/material/divider';
 
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
   { path: 'auth/signin', component: SigninComponent },
-  { path: 'change-password', canActivate: [AuthGuardService], component: ChangePasswordComponent },
   { path: 'choose-application', canActivate: [AuthGuardService], component: RedirectComponent },
+  { path: 'change-password', canActivate: [AuthGuardService], component: ChangePasswordComponent },
   { path: 'user-profile', canActivate: [AuthGuardService], component: UserProfileComponent },
   { path: '', redirectTo: 'auth/signin', pathMatch: 'full' },
   { path: '**', redirectTo: 'auth/signin' }
@@ -79,7 +80,8 @@ const appRoutes: Routes = [
     MatProgressSpinnerModule,
     MatCardModule,
     MatTooltipModule,
-    MatTabsModule
+    MatTabsModule,
+    MatDividerModule
   ],
   providers: [AuthService, AuthGuardService, DataService, RedirectComponent],
   bootstrap: [AppComponent],

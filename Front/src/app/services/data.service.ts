@@ -9,15 +9,15 @@ import { Observable } from 'rxjs';
 })
 export class DataService {
 
-  auth = firebase.auth();
-  userDoc: AngularFirestoreDocument<User>;
-  data: Observable<User>;
+  // auth = firebase.auth();
+  // userDoc: AngularFirestoreDocument<User>;
+  // data: Observable<User>;
 
   constructor(private afs: AngularFirestore) { }
 
-  getDataUser(id: any): Observable<User> {
-    this.userDoc = this.afs.doc<User>('Users/' + id);
-    this.data = this.userDoc.valueChanges();
-    return this.data;
-  }
+  // getDataUser(id: any): Observable<User> {
+  //   this.userDoc = this.afs.doc<User>('Users/' + id);
+  //   this.data = this.userDoc.valueChanges();
+  //   return this.data;
+  // }
 }

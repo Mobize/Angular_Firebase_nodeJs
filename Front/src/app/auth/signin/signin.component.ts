@@ -5,7 +5,6 @@ import { AuthService } from './../../services/auth.service';
 import { Router } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import * as firebase from 'firebase';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
 
@@ -30,23 +29,28 @@ export class SigninComponent implements OnInit {
   isAuth: boolean;
   isLoadingCircle = false;
   isWaitingCircle = false;
-  UserPassword: boolean;
-  dataUsers;
-  dataUserFirestore;
-  emailUserFirestore;
-  displayNameFirestore;
-  isAdminFirestore;
-  isPasswordChangedFirestore;
-  authInfo: Observable<firebase.User>;
+  private user: Observable<firebase.User>;
+  private userDetails: firebase.User = null;
 
   constructor(private formBuilder: FormBuilder,
-              private afAuth: AngularFireAuth,
               private authService: AuthService,
               private router: Router,
               public dialog: MatDialog,
               private redirect: RedirectComponent,
-              private db: AngularFirestore) {
-                this.authInfo = this.afAuth.authState;
+              private firebaseAuth: AngularFireAuth
+              ) {
+                this.user = firebaseAuth.authState;
+
+                this.user.subscribe(
+                  (user) => {
+                    if (user) {
+                      this.userDetails = user;
+                      // console.log(this.userDetails);
+                    } else {
+                      this.userDetails = null;
+                    }
+                  }
+                );
                }
 
   openDialog(): void {
@@ -94,49 +98,24 @@ export class SigninComponent implements OnInit {
   initForm() {
     this.signinForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.pattern(/[0-9a-zA-Z]{8,}/)]]
+      password: ['', [Validators.required, Validators.pattern(/[0-9a-zA-Z]/)]]
     });
   }
 
-  getDocs() {
-    const document: AngularFirestoreDocument<any> = this.db.doc('Users/' + this.auth.currentUser.uid);
-    const document$: Observable<any> = document.valueChanges();
-    document$.subscribe((data) => {
-      this.dataUserFirestore = data;
-      this.emailUserFirestore = data.email;
-      this.displayNameFirestore = data.displayName;
-      this.isAdminFirestore = data.isAdmin;
-      this.isPasswordChangedFirestore = data.isPasswordChanged;
-    });
-    console.log(this.isPasswordChangedFirestore);
-  }
+  googleSignIn() {
 
-    googleSignIn() {
-      this.authService.googleLogin().then(() => {
-        firebase.auth().onAuthStateChanged(
-          (user) => {
-            if (user) {
-              const document: AngularFirestoreDocument<any> = this.db.doc('Users/' + this.auth.currentUser.uid);
-              const document$: Observable<any> = document.valueChanges();
-              document$.subscribe((data) => {
-                if (data.isPasswordChanged) {
-                  if (this.auth) {
-                    this.redirect.openSnackBar();
-                    this.router.navigate(['/choose-application']);
-                  }
-                } else {
-                    this.router.navigate(['/change-password']);
-                }
-              });
-            }
-          }
-        );
-      });
-    }
+    this.firebaseAuth.auth.signInWithPopup(
+      new firebase.auth.GoogleAuthProvider()
+    ).then(() => {
+      this.isAuth = true;
+      this.router.navigate(['/choose-application']);
+    });
+  }
 
    onSubmit() {
     const email = this.signinForm.get('email').value;
     const password = this.signinForm.get('password').value;
+
     this.isWaitingCircle = true;
 
     this.authService.signInUser(email, password).then(
@@ -144,18 +123,16 @@ export class SigninComponent implements OnInit {
         firebase.auth().onAuthStateChanged(
           (user) => {
             if (user) {
-              const document: AngularFirestoreDocument<any> = this.db.doc('Users/' + this.auth.currentUser.uid);
-              const document$: Observable<any> = document.valueChanges();
-              document$.subscribe((data) => {
-                if (data.isPasswordChanged) {
-                  if (this.auth) {
-                    this.redirect.openSnackBar();
-                    this.router.navigate(['/choose-application']);
-                  }
-                } else {
-                    this.router.navigate(['/change-password']);
-                }
-              });
+              this.redirect.openSnackBar();
+              if (password === 'Test1234') {
+                // console.log('original password');
+                this.router.navigate(['/change-password']);
+                localStorage.setItem('isPasswordChanged', 'Non');
+              } else {
+                this.router.navigate(['/choose-application']);
+                localStorage.setItem('isPasswordChanged', 'Oui');
+
+              }
             }
           }
         );
@@ -170,6 +147,8 @@ export class SigninComponent implements OnInit {
           this.errorMessage = 'Erreur: Identifiant et/ou mot de passe incorrect';
         } else if (error.code === 'auth/user-disabled') {
           this.errorMessage = 'Erreur: Le compte utilisateur à été désactivé par un administrateur';
+        } else if (error.code === 'auth/invalid-email') {
+          this.errorMessage = 'Veuillez entrer vos identifiants';
         }
       }
     );

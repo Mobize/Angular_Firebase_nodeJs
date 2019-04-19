@@ -1,8 +1,11 @@
 import { DataService } from './../services/data.service';
 import { RedirectComponent } from './../redirect/redirect.component';
 import { AuthService } from './../services/auth.service';
+import { User } from './../models/user.model';
 import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase';
+import { Observable } from 'rxjs';
+import { AngularFirestoreDocument, AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-header',
@@ -12,8 +15,12 @@ import * as firebase from 'firebase';
 export class HeaderComponent implements OnInit {
 
   isAuth: boolean;
-  photoUrl: string;
-  constructor(private authService: AuthService, private logout: RedirectComponent, private dataService: DataService ) { }
+  auth = firebase.auth();
+  photoUrl;
+
+  constructor(private authService: AuthService,
+              private logout: RedirectComponent,
+               ) { }
 
   ngOnInit() {
 
@@ -21,12 +28,7 @@ export class HeaderComponent implements OnInit {
       (user) => {
         if (user) {
           this.isAuth = true;
-          const idUser = firebase.auth().currentUser;
-          const dataUser = this.dataService.getDataUser(idUser.uid);
-          dataUser.subscribe((response) => {
-            this.photoUrl = response.photoURL;
-            console.log(response.photoURL);
-          })
+          this.photoUrl = this.auth.currentUser.photoURL;
         } else {
           this.isAuth = false;
         }

@@ -11,12 +11,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 })
 export class RedirectComponent implements OnInit {
   durationInSeconds = 2;
-  dataUser: any[];
   auth = firebase.auth();
-  emailUser: string;
-  displayName: string;
-  isAdmin: boolean;
-  isPasswordChanged: boolean;
 
   constructor(private snackBar: MatSnackBar, private db: AngularFirestore) {}
 
@@ -36,20 +31,20 @@ export class RedirectComponent implements OnInit {
         });
       }
 
-  getDocs() {
-    const document: AngularFirestoreDocument<any> = this.db.doc('Users/' + this.auth.currentUser.uid);
-    const document$: Observable<any> = document.valueChanges();
-    document$.subscribe((data) => {
-      this.dataUser = data;
-      this.emailUser = data.email;
-      this.displayName = data.displayName;
-      this.isAdmin = data.isAdmin;
-      this.isPasswordChanged = data.isPasswordChanged;
-    });
-  }
+  // getDocs() {
+  //   const document: AngularFirestoreDocument<any> = this.db.doc('Users/' + this.auth.currentUser.uid);
+  //   const document$: Observable<any> = document.valueChanges();
+  //   document$.subscribe((data) => {
+  //     this.dataUser = data;
+  //     this.emailUser = data.email;
+  //     this.displayName = data.displayName;
+  //     this.isAdmin = data.isAdmin;
+  //     this.isPasswordChanged = data.isPasswordChanged;
+  //   });
+  // }
 
   ngOnInit() {
-    this.getDocs();
+    // this.getDocs();
   }
 }
 
