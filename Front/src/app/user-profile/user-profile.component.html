@@ -1,0 +1,40 @@
+<div class="container p-5 mt-5" id="user_profil_container">
+  <div class="row">
+    <div class="col-md-12">
+      <h2 class="profil">Profil</h2>
+      <div *ngIf="loadingCircle" class="loading_circle_profil">
+          <mat-spinner></mat-spinner>
+      </div>
+      <mat-card *ngIf="!loadingCircle">
+        <mat-card-header>
+          <mat-card-title class="profil_title">{{ displayName }}</mat-card-title>
+          <mat-card-subtitle class="profil_title" *ngIf="isAdmin">Administrateur</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-tab-group>
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon custom_icon">person_pin</mat-icon>Informations
+              </ng-template>
+              <div class="large_content">
+                <div class="user_infos">Email: {{ emailUser }}</div>
+                <div class="user_infos">Nom complet: {{ displayName }}</div>
+                <div>IdToken: {{ tokenId }}</div>
+              </div>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                  <mat-icon class="example-tab-icon custom_icon">graphic_eq</mat-icon>Paramètres
+                </ng-template>
+              <div class="large_content">
+                <div class="user_infos">Administrateur: {{ displayAdmin }}</div>
+                <div class="user_infos">Mot de passe changé: {{ displayIsPasswordChanged}}</div>
+                <a routerLink="/change-password" *ngIf="!isPasswordChanged">Changer de mot de passe</a>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

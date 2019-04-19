@@ -1,0 +1,18 @@
+{"users": [
+{
+  "localId": "450",
+  "email": "olivier-charpentier@alain-bensoussan.com",
+  "emailVerified": false,
+  "createdAt": "1553615846045",
+  "providerUserInfo": []
+},
+{
+  "localId": "4c7ymRicOVTn6KwBXzie6tY47nm2",
+  "email": "olivier.charpentier@icloud.com",
+  "emailVerified": true,
+  "passwordHash": "bfwQC8wCEson0j7AosVYSE/K2yqpMfTjJzC3eLNzXsbuBgKNtW1ki8SNj0re31iq739SjNjQEN7hn5brRpzqqg==",
+  "salt": "IDuPW91iGx0Jdw==",
+  "lastSignedInAt": "1553679187596",
+  "createdAt": "1553519749377",
+  "providerUserInfo": []
+}]}

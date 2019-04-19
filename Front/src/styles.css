@@ -1,0 +1,244 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+/***************** COMMON APP *****************/
+span.center {
+  margin: auto;
+}
+
+a.app_link {
+  text-decoration: none;
+}
+
+/***************** POPUP *****************/
+.mat-snack-bar-container{
+  background: #1976d2;
+}
+
+/***************** CIRCLE SPINNER **************** */
+circle.ng-star-inserted {
+  stroke-width: 3% !important;
+}
+
+mat-spinner #wait_circle2.mat-spinner.mat-progress-spinner.mat-primary.mat-progress-spinner-indeterminate-animation,
+#wait_circle3.mat-spinner.mat-progress-spinner.mat-primary.mat-progress-spinner-indeterminate-animation,
+#wait_circle2.mat-progress-spinner svg, mat-spinner#wait_circle2,
+ #wait_circle3.mat-progress-spinner svg, mat-spinner#wait_circle3 {
+  height: 50px !important;
+}
+
+mat-spinner #wait_circle.mat-spinner.mat-progress-spinner.mat-primary.mat-progress-spinner-indeterminate-animation, .mat-progress-spinner svg {
+  height: 100px !important;
+}
+
+.login_circle {
+  margin-top: 150px !important;
+}
+
+circle {
+  stroke-width: 4% !important;
+}
+
+.mat-progress-spinner circle, .mat-spinner circle {
+  stroke: #1976d2;
+}
+
+.loading_circle_profil {
+  display: flex;
+  justify-content: center;
+}
+
+/***************** NAV *****************/
+
+.img_navbar {
+  height: 30px;
+  border-radius: 15px;
+}
+nav.navbar.navbar-expand-lg.navbar-light.bg-light {
+  min-height: 56px;
+}
+
+.navbar-light .navbar-nav, .navbar-light .navbar-nav .nav-link:hover {
+  color: black;
+}
+
+a.navbar-brand.userLogo {
+  margin-top: -6px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.app_container {
+  padding-top: 6rem;
+}
+
+.app_margin20 {
+  margin-bottom: 20px;
+}
+
+.card_panel {
+  display: flex;
+  justify-content: center;
+}
+
+span.navbar-text {
+  margin-right: 30px;
+}
+
+/**************** CARD *****************/
+.mat-card.app_card {
+  background: #1976d2;
+}
+
+.mat-card-image.img_logo {
+  width: 100%;
+  margin: auto;
+  padding-bottom: 10px;
+}
+
+mat-card-header.center.mat-card-header {
+  justify-content: center;
+}
+
+mat-card.app_card.mat-card {
+  margin-bottom: 20px;
+  min-width: 200px;
+  max-width: 300px;
+}
+
+mat-card.app_card.mat-card:hover {
+  background: #1976d2db;
+}
+
+mat-card.card_redirect.mat-card {
+  background-color: #1976d2;
+  margin: auto;
+  max-width: 350px;
+}
+
+.mat-card-title.app_title {
+  color: white;
+}
+
+mat-card.card_redirect.mat-card:hover {
+  background: #1976d2db;
+}
+
+.card {
+  min-width: 230px;
+}
+
+/***************** LOGIN & PASSWORD CARD *****************/
+
+#login_container, #reset_password_container, #app_redirect_container, #user_profil_container {
+  /* padding: 3rem, 0, 3rem, 0 !important; */
+  padding: 0 !important;
+}
+
+.col-12.login_card {
+  width: 500px;
+  min-width: 270px;
+  margin: auto;
+}
+
+/***************** PASSWORD MODIFICATION *****************/
+.card-header {
+  background-color: #1976d2;
+  color: white;
+}
+
+.userName {
+  color: #1976d2;
+}
+
+.passwordInput, .usernameInput {
+  width: 100%;
+}
+
+/***************** USER *****************/
+
+.userPhoto {
+  border-radius: 15px;
+}
+
+.user_infos {
+  width: 500px;
+}
+
+.profil {
+  margin-bottom: 20px;
+}
+
+mat-icon.example-tab-icon.custom_icon.mat-icon.notranslate.material-icons.mat-icon-no-color {
+  margin-right: 5px;
+}
+
+.large_content {
+  height: 300px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  margin: 16px;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.mat-tab-body-content {
+  height: none;
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: #1976d2;
+}
+
+/***************** ICONS - BUTTONS *****************/
+.material-icons {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+mat-icon.mat-icon.notranslate.material-icons.mat-icon-no-color {
+  cursor: pointer;
+}
+
+a.password-link:not([href]):not([tabindex]) {
+  color: #1976d2;
+  cursor: pointer;
+}
+
+a.password-link:not([href]):not([tabindex]):hover {
+  text-decoration: underline;
+}
+
+#reset-password-email {
+  width: 100%;
+}
+
+.submit {
+  width: 100%;
+}
+
+i.material-icons.lock {
+  margin-top: -5px;
+}
+i.material-icons.user {
+  margin-top: -5px;
+  margin-right: 5px;
+  margin-left: -5px;
+}
+
+.mat-raised-button:not(:disabled):hover {
+  background-color: #1976d2;
+  color: white;
+}
+
+button.mat-button.validate {
+  margin: auto;
+}
+

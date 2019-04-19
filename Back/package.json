@@ -1,0 +1,28 @@
+{
+  "name": "auth-registres-nodejs",
+  "version": "1.0.0",
+  "description": "Auth-NodeJs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "bootstrap": "^4.3.1",
+    "circular-json": "^0.5.9",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "express-list-endpoints": "^4.0.0",
+    "firebase-admin": "^7.1.1",
+    "google-auth-library": "^3.1.2",
+    "googleapis": "^39.1.0",
+    "gtoken": "^2.3.1",
+    "https-proxy-agent": "^2.2.1",
+    "mysql": "^2.16.0",
+    "open": "^6.0.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
+  }
+}
