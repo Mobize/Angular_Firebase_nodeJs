@@ -1,5 +1,5 @@
 Back:<br>
-node functions/index.js (création d'utilisateurs Firebase et import dans Firestore via Admin Sdk)
+node functions/index.js (création d'utilisateurs Firebase et import dans Firebase Authentication via Admin Sdk)
 ***************
 
 Front:<br>
